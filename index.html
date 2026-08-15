@@ -477,16 +477,10 @@
     <a href="https://discord.gg/EThzYwM42u" target="_blank" class="join-button">Join Discord</a>
   </section>
 
-  <!-- Member Stats -->
-  <section class="stats">
-    <div class="stat-card">
-      <div class="stat-number" id="total-members">---</div>
-      <div class="stat-label">Gesamt Mitglieder</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number stat-online" id="online-members">---</div>
-      <div class="stat-label">Aktuell Online</div>
-    </div>
+  <!-- Member Stats - FeedPulse Widget -->
+  <section class="stats" style="justify-items: center;">
+    <!-- Free Discord live-members widget · von FeedPulse · Anleitung: feed-pulse.com/de/free-discord-members-widget -->
+    <script async src="https://visitor-tracker-129.emergent.host/api/embed/discord-members.js?guild=1339415475456708670&theme=discord&show_name=1&lang=de&sz=large"></script>
   </section>
 
   <!-- Info Section -->
@@ -605,51 +599,7 @@
     });
   });
 
-  // ============ MEMBER COUNTER ============
-  const SERVER_ID = '1339415475456708670';
-  const BOT_TOKEN = '4755f17a9963bc74e0243fbc66733d4c3ac3222ddbdf585360055cd7aad4b6e7';
-
-  async function updateMemberCount() {
-    try {
-      const response = await fetch(`https://discord.com/api/v10/guilds/${SERVER_ID}`, {
-        headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const totalMembers = data.approximate_member_count || 0;
-        document.getElementById('total-members').textContent = totalMembers.toLocaleString();
-      }
-    } catch (error) {
-      console.log('Member count update:', error);
-    }
-  }
-
-  async function updateOnlineCount() {
-    try {
-      const response = await fetch(`https://discord.com/api/v10/guilds/${SERVER_ID}/preview`, {
-        headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const onlineMembers = data.approximate_presence_count || 0;
-        document.getElementById('online-members').textContent = onlineMembers.toLocaleString();
-      }
-    } catch (error) {
-      console.log('Online count update:', error);
-    }
-  }
-
-  // Initial load
-  updateMemberCount();
-  updateOnlineCount();
-
-  // Update total members every 24 hours
-  setInterval(updateMemberCount, 24 * 60 * 60 * 1000);
-
-  // Update online members every 15 minutes
-  setInterval(updateOnlineCount, 15 * 60 * 1000);
+  // Member Counter wird via FeedPulse Widget geladen
 
   // ============ FEEDBACK FORM ============
   const WEBHOOK_URL = 'https://discord.com/api/webhooks/1538157671729987635/ATyOJ3YRoMSixIJRHxRSNicJl1RBO6n9sjv3YVnK6-suiE6H-0margxf5umbcsXmB46y';
