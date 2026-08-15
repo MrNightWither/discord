@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NightWither Unity Discord</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0d;
+      --surface: #111116;
+      --border: rgba(255,255,255,0.07);
+      --gold: #c9a84c;
+      --gold-dim: rgba(201,168,76,0.15);
+      --text: #e8e8e8;
+      --text-secondary: #95A5A6;
+      --muted: #666;
+      --success: #2ECC71;
+    }
+
+    body {
+      background: #000000;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-header {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #d4a94f 0%, #f0d080 50%, #b8872a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 101;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100vh;
+      background: rgba(10, 10, 13, 0.95);
+      backdrop-filter: blur(10px);
+      border-left: 1px solid var(--border);
+      padding: 100px 40px 40px;
+      transition: right 0.3s ease;
+      z-index: 99;
+      overflow-y: auto;
+    }
+
+    .side-menu.active {
+      right: 0;
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 98;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .menu-section {
+      margin-bottom: 40px;
+    }
+
+    .menu-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+
+    .menu-item {
+      display: block;
+      padding: 12px 0;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      text-align: left;
+    }
+
+    .menu-item:hover {
+      color: var(--gold);
+    }
+
+    /* Main Content */
+    .content {
+      position: relative;
+      z-index: 2;
+      padding: 120px 40px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .hero-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 8vw, 4rem);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #d4a94f 0%, #f0d080 50%, #b8872a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .join-button {
+      display: inline-block;
+      padding: 16px 50px;
+      background: linear-gradient(135deg, #d4a94f 0%, #f0d080 50%, #b8872a 100%);
+      color: #0a0a0d;
+      text-decoration: none;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 15px rgba(201,168,76,0.3);
+    }
+
+    .join-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(201,168,76,0.4);
+    }
+
+    /* Stats Section */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 80px;
+    }
+
+    .stat-card {
+      background: rgba(17, 17, 22, 0.6);
+      border: 1px solid var(--border);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      animation: fadeUp 0.8s ease;
+    }
+
+    .stat-number {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .stat-online {
+      color: var(--success);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Info Section */
+    .info-section {
+      background: rgba(17, 17, 22, 0.6);
+      border: 1px solid var(--border);
+      padding: 40px;
+      border-radius: 12px;
+      margin-bottom: 80px;
+      backdrop-filter: blur(10px);
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .info-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: var(--gold);
+    }
+
+    .info-text {
+      line-height: 1.8;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Feedback Form */
+    .feedback-section {
+      margin-bottom: 80px;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .form-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: var(--gold);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(17, 17, 22, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-button {
+      padding: 12px 30px;
+      background: var(--gold);
+      color: #0a0a0d;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .form-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201,168,76,0.3);
+    }
+
+    .form-status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+      font-size: 0.9rem;
+    }
+
+    .form-status.success {
+      background: rgba(46, 204, 113, 0.2);
+      color: var(--success);
+      display: block;
+    }
+
+    .form-status.error {
+      background: rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
+      display: block;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .side-menu {
+        width: 100%;
+        right: -100%;
+      }
+
+      .content {
+        padding: 80px 20px 40px;
+      }
+
+      .hero {
+        margin-bottom: 60px;
+      }
+
+      .hero-title {
+        font-size: clamp(1.5rem, 6vw, 2.5rem);
+      }
+
+      .info-section {
+        padding: 25px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Particle Canvas -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- Header -->
+<header>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <img src="logo.png" alt="NWU Logo" style="width: 40px; height: 40px; filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));">
+    <div class="logo-header">NWU</div>
+  </div>
+  <button class="menu-toggle">☰</button>
+</header>
+
+<!-- Side Menu Overlay -->
+<div class="menu-overlay"></div>
+
+<!-- Side Menu -->
+<nav class="side-menu">
+  <div class="menu-section">
+    <div class="menu-title">Navigation</div>
+    <a href="#feedback" class="menu-item">Feedback</a>
+    <a href="#faq" class="menu-item">FAQ</a>
+    <a href="#server" class="menu-item">Server-Erklärung</a>
+  </div>
+
+  <!-- FAQ Section in Menu -->
+  <div class="menu-section" id="faq">
+    <div class="menu-title">FAQ</div>
+    <div style="font-size: 0.9rem; line-height: 1.6; color: var(--text-secondary);">
+      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Was ist NightWither Unity Discord?</strong><br>Community für Streamer, Gaming, Content Creation, Support & Austausch</p>
+      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Wie trete ich bei?</strong><br>Klick den "Join Discord" Button auf dieser Seite</p>
+      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Gibt es Regeln?</strong><br>Ja! Unter "Tor der Dunkelheit" → #Regelwerk</p>
+      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Kann ich streamen / Content posten?</strong><br>Ja! Es gibt dedizierte Kanäle dafür</p>
+      <p><strong style="color: var(--gold);">Welche Gaming-Kanäle gibt es?</strong><br>Call of Duty, Warzone, Arc Raiders, Diablo, Minecraft, Fortnite, Mobile Games & mehr!</p>
+    </div>
+  </div>
+
+  <!-- Server-Erklärung in Menu -->
+  <div class="menu-section" id="server">
+    <div class="menu-title">Server-Struktur</div>
+    <div style="font-size: 0.85rem; line-height: 1.8; color: var(--text-secondary);">
+      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">🌑 Tor der Dunkelheit</strong><br>Willkommensbereich, Regeln, Voice</p>
+      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">⭐ Tor des Lichts</strong><br>MrNightwither Streaming Area</p>
+      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">🎮 Spiele</strong><br>COD, Warzone, Arc Raiders, Diablo, Minecraft, Fortnite & mehr</p>
+      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">💫 Schatten Wünsche</strong><br>Community-Vorschläge & Ideen</p>
+      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">📢 Schattenwerbung</strong><br>Social Media & Discord Promotion</p>
+      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">💬 Schatten Gespräche</strong><br>Temporäre Voice Channels & Chat</p>
+      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">🛟 Schatten Support</strong><br>Support & Ticket-System</p>
+      <p><strong style="color: var(--gold);">😴 Ruhestand</strong><br>AFK & Entspannungs-Bereiche</p>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="content">
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="hero-title">Herzliche Willkommen beim<br><span>NIGHTWITHER UNITY</span><br>Discord</h1>
+    <p class="hero-subtitle">Eine aktive Community für Gaming, Streaming & Content Creation</p>
+    <a href="https://discord.gg/EThzYwM42u" target="_blank" class="join-button">Join Discord</a>
+  </section>
+
+  <!-- Member Stats -->
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-number" id="total-members">---</div>
+      <div class="stat-label">Gesamt Mitglieder</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number stat-online" id="online-members">---</div>
+      <div class="stat-label">Aktuell Online</div>
+    </div>
+  </section>
+
+  <!-- Info Section -->
+  <section class="info-section">
+    <h2 class="info-title">Was dich erwartet</h2>
+    <p class="info-text">
+      Tauche ein in eine lebendige Community, in der Gaming, Streaming und Content Creation im Zentrum stehen. 
+      Hier kannst du mit gleichgesinnten Menschen über deine Lieblingsspiele sprechen, dich beim Streaming von anderen inspirieren lassen, 
+      oder einfach Teil einer unterstützenden Community sein. Egal ob Warzone, Fortnite, Minecraft oder andere Games – 
+      es gibt für jeden das Richtige. Komm vorbei und lass dich von unserer Energie anstecken! 🚀
+    </p>
+  </section>
+
+  <!-- Feedback Section -->
+  <section class="feedback-section" id="feedback">
+    <h2 class="form-title">Dein Feedback</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">
+      Hast du Verbesserungsvorschläge oder Bugs gefunden? Teile dein Feedback mit uns!
+    </p>
+    <form id="feedback-form">
+      <div class="form-group">
+        <label class="form-label">Kategorie</label>
+        <select class="form-select" id="feedback-category" required>
+          <option value="">Wähle eine Kategorie...</option>
+          <option value="Bug / Fehler">Bug / Fehler</option>
+          <option value="Feature Request">Feature Request</option>
+          <option value="Verbesserung">Verbesserung</option>
+          <option value="Community Feedback">Community Feedback</option>
+          <option value="Sonstiges">Sonstiges</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dein Feedback</label>
+        <textarea class="form-textarea" id="feedback-message" placeholder="Schreib hier dein Feedback..." required></textarea>
+      </div>
+      <button type="submit" class="form-button">Feedback Absenden</button>
+      <div class="form-status" id="form-status"></div>
+    </form>
+  </section>
+</main>
+
+<script>
+  // ============ PARTICLE CANVAS ============
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.size = Math.random() * 2 + 0.5;
+      this.opacity = Math.random() * 0.5 + 0.2;
+      this.color = Math.random() > 0.5 ? 'rgba(201, 168, 76,' : 'rgba(232, 201, 109,';
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      this.opacity += (Math.random() - 0.5) * 0.02;
+      this.opacity = Math.max(0.1, Math.min(0.8, this.opacity));
+    }
+
+    draw() {
+      ctx.fillStyle = this.color + this.opacity + ')';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  const particles = Array.from({ length: 50 }, () => new Particle());
+
+  function animate() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // ============ MENU TOGGLE ============
+  const menuToggle = document.querySelector('.menu-toggle');
+  const sideMenu = document.querySelector('.side-menu');
+  const menuOverlay = document.querySelector('.menu-overlay');
+
+  menuToggle.addEventListener('click', () => {
+    sideMenu.classList.toggle('active');
+    menuOverlay.classList.toggle('active');
+  });
+
+  menuOverlay.addEventListener('click', () => {
+    sideMenu.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  });
+
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      sideMenu.classList.remove('active');
+      menuOverlay.classList.remove('active');
+    });
+  });
+
+  // ============ MEMBER COUNTER ============
+  const SERVER_ID = '1339415475456708670';
+  const BOT_TOKEN = '4755f17a9963bc74e0243fbc66733d4c3ac3222ddbdf585360055cd7aad4b6e7';
+
+  async function updateMemberCount() {
+    try {
+      const response = await fetch(`https://discord.com/api/v10/guilds/${SERVER_ID}`, {
+        headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const totalMembers = data.approximate_member_count || 0;
+        document.getElementById('total-members').textContent = totalMembers.toLocaleString();
+      }
+    } catch (error) {
+      console.log('Member count update:', error);
+    }
+  }
+
+  async function updateOnlineCount() {
+    try {
+      const response = await fetch(`https://discord.com/api/v10/guilds/${SERVER_ID}/preview`, {
+        headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const onlineMembers = data.approximate_presence_count || 0;
+        document.getElementById('online-members').textContent = onlineMembers.toLocaleString();
+      }
+    } catch (error) {
+      console.log('Online count update:', error);
+    }
+  }
+
+  // Initial load
+  updateMemberCount();
+  updateOnlineCount();
+
+  // Update total members every 24 hours
+  setInterval(updateMemberCount, 24 * 60 * 60 * 1000);
+
+  // Update online members every 15 minutes
+  setInterval(updateOnlineCount, 15 * 60 * 1000);
+
+  // ============ FEEDBACK FORM ============
+  const WEBHOOK_URL = 'https://discord.com/api/webhooks/1538157671729987635/ATyOJ3YRoMSixIJRHxRSNicJl1RBO6n9sjv3YVnK6-suiE6H-0margxf5umbcsXmB46y';
+
+  const feedbackForm = document.getElementById('feedback-form');
+  const formStatus = document.getElementById('form-status');
+
+  feedbackForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const category = document.getElementById('feedback-category').value;
+    const message = document.getElementById('feedback-message').value;
+
+    if (!category || !message) {
+      formStatus.textContent = 'Bitte alle Felder ausfüllen!';
+      formStatus.classList.add('error');
+      formStatus.classList.remove('success');
+      return;
+    }
+
+    try {
+      const embedMessage = {
+        embeds: [{
+          title: `Neues Feedback: ${category}`,
+          description: message,
+          color: 0xc9a84c,
+          footer: { text: 'NightWither Unity Discord' },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(embedMessage)
+      });
+
+      if (response.ok) {
+        formStatus.textContent = '✓ Feedback erfolgreich versendet! Danke für dein Input!';
+        formStatus.classList.add('success');
+        formStatus.classList.remove('error');
+        feedbackForm.reset();
+
+        setTimeout(() => {
+          formStatus.classList.remove('success');
+        }, 5000);
+      } else {
+        throw new Error('Fehler beim Versenden');
+      }
+    } catch (error) {
+      console.error('Fehler:', error);
+      formStatus.textContent = '✗ Fehler beim Versenden. Bitte später versuchen!';
+      formStatus.classList.add('error');
+      formStatus.classList.remove('success');
+    }
+  });
+</script>
+
+</body>
+</html>
