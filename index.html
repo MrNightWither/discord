@@ -428,6 +428,20 @@
     .form-hint a { color: var(--gold); }
     .form-button:disabled { opacity: 0.5; cursor: wait; }
     button:focus-visible, a:focus-visible, .form-select:focus-visible, .form-textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  /* Zurück zu allen Kanälen */
+  .nw-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 44px; padding: 0 16px 0 12px;
+    border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #e8e8e8; text-decoration: none; white-space: nowrap;
+    font-family: Rajdhani, 'Arial Narrow', system-ui, sans-serif;
+    font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+    position: relative; z-index: 5;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .nw-back:hover, .nw-back:focus-visible { border-color: #c9a84c; color: #c9a84c; background: rgba(201, 168, 76, 0.08); }
+  .nw-back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
   </style>
 </head>
 <body>
@@ -441,7 +455,10 @@
     <img src="logo.png" alt="NWU Logo" style="width: 40px; height: 40px; filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));">
     <div class="logo-header">NWU</div>
   </div>
-  <button class="menu-toggle" type="button" aria-label="Menü öffnen">☰</button>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <a class="nw-back" href="https://nightwither.de" aria-label="Zurück zu allen Kanälen von NightWither"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Alle Kanäle</a>
+    <button class="menu-toggle" type="button" aria-label="Menü öffnen">☰</button>
+  </div>
 </header>
 
 <!-- Side Menu Overlay -->
@@ -488,7 +505,7 @@
 <main class="content">
   <!-- Hero Section -->
   <section class="hero">
-    <h1 class="hero-title">Tritt der<br><span>Dunkelheit</span><br>bei!<br><span style="font-size: 0.8em; letter-spacing: 0.1em; color: var(--gold);">› NIGHTWITERUNITY</span></h1>
+    <h1 class="hero-title">Tritt der<br><span>Dunkelheit</span><br>bei!<br><span style="font-size: 0.8em; letter-spacing: 0.1em; color: var(--gold);">› NIGHTWITHERUNITY</span></h1>
     <p class="hero-subtitle">Eine aktive Community für Gaming, Streaming & Content Creation</p>
     <a href="https://discord.gg/EThzYwM42u" target="_blank" rel="noopener noreferrer" class="join-button">Join Discord</a>
   </section>
@@ -549,7 +566,7 @@
   </section>
 </main>
 
-<script src="discord.js"></script>
+<script src="discord.js?v=20260910c"></script>
 
 </body>
 </html>
