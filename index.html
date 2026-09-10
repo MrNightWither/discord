@@ -4,8 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NightWither Unity Discord</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src https://nwu-anmeldung.nwu-brand.workers.dev; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="Der Discord Server von NightWither Unity: Gaming, Streaming und Content Creation">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <style>
+    @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/rajdhani-500.woff') format('woff'); }
+    @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/rajdhani-700.woff') format('woff'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/inter-400.woff') format('woff'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/inter-500.woff') format('woff'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/inter-600.woff') format('woff'); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -23,7 +33,7 @@
     body {
       background: #000000;
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
@@ -138,7 +148,7 @@
       cursor: pointer;
       border: none;
       background: none;
-      font-family: 'Inter', sans-serif;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       width: 100%;
       text-align: left;
     }
@@ -311,7 +321,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       font-size: 1rem;
       transition: border-color 0.2s;
     }
@@ -412,6 +422,12 @@
         grid-template-columns: 1fr 1fr;
       }
     }
+      .stats[hidden] { display: none; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .form-hint { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+    .form-hint a { color: var(--gold); }
+    .form-button:disabled { opacity: 0.5; cursor: wait; }
+    button:focus-visible, a:focus-visible, .form-select:focus-visible, .form-textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   </style>
 </head>
 <body>
@@ -425,7 +441,7 @@
     <img src="logo.png" alt="NWU Logo" style="width: 40px; height: 40px; filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));">
     <div class="logo-header">NWU</div>
   </div>
-  <button class="menu-toggle">☰</button>
+  <button class="menu-toggle" type="button" aria-label="Menü öffnen">☰</button>
 </header>
 
 <!-- Side Menu Overlay -->
@@ -474,13 +490,19 @@
   <section class="hero">
     <h1 class="hero-title">Tritt der<br><span>Dunkelheit</span><br>bei!<br><span style="font-size: 0.8em; letter-spacing: 0.1em; color: var(--gold);">› NIGHTWITERUNITY</span></h1>
     <p class="hero-subtitle">Eine aktive Community für Gaming, Streaming & Content Creation</p>
-    <a href="https://discord.gg/EThzYwM42u" target="_blank" class="join-button">Join Discord</a>
+    <a href="https://discord.gg/EThzYwM42u" target="_blank" rel="noopener noreferrer" class="join-button">Join Discord</a>
   </section>
 
-  <!-- Member Stats - FeedPulse Widget -->
-  <section class="stats" style="justify-items: center;">
-    <!-- Free Discord live-members widget · von FeedPulse · Anleitung: feed-pulse.com/de/free-discord-members-widget -->
-    <script async src="https://visitor-tracker-129.emergent.host/api/embed/discord-members.js?guild=1339415475456708670&theme=discord&show_name=1&lang=de&sz=large"></script>
+  <!-- Mitgliederzahl, geladen über den eigenen Worker -->
+  <section class="stats" id="discordStats" hidden>
+    <div class="stat-card">
+      <div class="stat-number" id="statMembers">0</div>
+      <div class="stat-label">Mitglieder</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number stat-online" id="statOnline">0</div>
+      <div class="stat-label">Online</div>
+    </div>
   </section>
 
   <!-- Info Section -->
@@ -500,9 +522,9 @@
     <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">
       Hast du Verbesserungsvorschläge oder Bugs gefunden? Teile dein Feedback mit uns!
     </p>
-    <form id="feedback-form">
+    <form id="feedback-form" novalidate>
       <div class="form-group">
-        <label class="form-label">Kategorie</label>
+        <label class="form-label" for="feedback-category">Kategorie</label>
         <select class="form-select" id="feedback-category" required>
           <option value="">Wähle eine Kategorie...</option>
           <option value="Bug / Fehler">Bug / Fehler</option>
@@ -513,150 +535,21 @@
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Dein Feedback</label>
-        <textarea class="form-textarea" id="feedback-message" placeholder="Schreib hier dein Feedback..." required></textarea>
+        <label class="form-label" for="feedback-message">Dein Feedback</label>
+        <textarea class="form-textarea" id="feedback-message" placeholder="Schreib hier dein Feedback..." maxlength="1500" required></textarea>
       </div>
-      <button type="submit" class="form-button">Feedback Absenden</button>
+      <div class="hp" aria-hidden="true">
+        <label for="feedback-website">Webseite</label>
+        <input type="text" id="feedback-website" tabindex="-1" autocomplete="off" />
+      </div>
+      <p class="form-hint">Dein Feedback wird anonym an unseren Discord Server übermittelt. Bitte schreib keine persönlichen Daten hinein. Mehr dazu in der <a href="https://datenschutz.nightwither.de" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.</p>
+      <button type="submit" class="form-button" id="feedback-submit">Feedback absenden</button>
       <div class="form-status" id="form-status"></div>
     </form>
   </section>
 </main>
 
-<script>
-  // ============ PARTICLE CANVAS ============
-  const canvas = document.getElementById('particle-canvas');
-  const ctx = canvas.getContext('2d');
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * 0.5;
-      this.vy = (Math.random() - 0.5) * 0.5;
-      this.size = Math.random() * 2 + 0.5;
-      this.opacity = Math.random() * 0.5 + 0.2;
-      this.color = Math.random() > 0.5 ? 'rgba(201, 168, 76,' : 'rgba(232, 201, 109,';
-    }
-
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      this.opacity += (Math.random() - 0.5) * 0.02;
-      this.opacity = Math.max(0.1, Math.min(0.8, this.opacity));
-    }
-
-    draw() {
-      ctx.fillStyle = this.color + this.opacity + ')';
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  const particles = Array.from({ length: 50 }, () => new Particle());
-
-  function animate() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  // ============ MENU TOGGLE ============
-  const menuToggle = document.querySelector('.menu-toggle');
-  const sideMenu = document.querySelector('.side-menu');
-  const menuOverlay = document.querySelector('.menu-overlay');
-
-  menuToggle.addEventListener('click', () => {
-    sideMenu.classList.toggle('active');
-    menuOverlay.classList.toggle('active');
-  });
-
-  menuOverlay.addEventListener('click', () => {
-    sideMenu.classList.remove('active');
-    menuOverlay.classList.remove('active');
-  });
-
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', () => {
-      sideMenu.classList.remove('active');
-      menuOverlay.classList.remove('active');
-    });
-  });
-
-  // Member Counter wird via FeedPulse Widget geladen
-
-  // ============ FEEDBACK FORM ============
-  const WEBHOOK_URL = 'https://discord.com/api/webhooks/1538157671729987635/ATyOJ3YRoMSixIJRHxRSNicJl1RBO6n9sjv3YVnK6-suiE6H-0margxf5umbcsXmB46y';
-
-  const feedbackForm = document.getElementById('feedback-form');
-  const formStatus = document.getElementById('form-status');
-
-  feedbackForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const category = document.getElementById('feedback-category').value;
-    const message = document.getElementById('feedback-message').value;
-
-    if (!category || !message) {
-      formStatus.textContent = 'Bitte alle Felder ausfüllen!';
-      formStatus.classList.add('error');
-      formStatus.classList.remove('success');
-      return;
-    }
-
-    try {
-      const embedMessage = {
-        embeds: [{
-          title: `Neues Feedback: ${category}`,
-          description: message,
-          color: 0xc9a84c,
-          footer: { text: 'NightWither Unity Discord' },
-          timestamp: new Date().toISOString()
-        }]
-      };
-
-      const response = await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(embedMessage)
-      });
-
-      if (response.ok) {
-        formStatus.textContent = '✓ Feedback erfolgreich versendet! Danke für dein Input!';
-        formStatus.classList.add('success');
-        formStatus.classList.remove('error');
-        feedbackForm.reset();
-
-        setTimeout(() => {
-          formStatus.classList.remove('success');
-        }, 5000);
-      } else {
-        throw new Error('Fehler beim Versenden');
-      }
-    } catch (error) {
-      console.error('Fehler:', error);
-      formStatus.textContent = '✗ Fehler beim Versenden. Bitte später versuchen!';
-      formStatus.classList.add('error');
-      formStatus.classList.remove('success');
-    }
-  });
-</script>
+<script src="discord.js"></script>
 
 </body>
 </html>
