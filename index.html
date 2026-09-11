@@ -1,555 +1,492 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NightWither Unity Discord</title>
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src https://nwu-anmeldung.nwu-brand.workers.dev; base-uri 'none'; form-action 'none'">
-  <meta name="description" content="Der Discord Server von NightWither Unity: Gaming, Streaming und Content Creation">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <style>
-    @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/rajdhani-500.woff') format('woff'); }
-    @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/rajdhani-700.woff') format('woff'); }
-    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/inter-400.woff') format('woff'); }
-    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/inter-500.woff') format('woff'); }
-    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/inter-600.woff') format('woff'); }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NightWither Unity Discord</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src https://nwu-anmeldung.nwu-brand.workers.dev; base-uri 'none'; form-action 'none'">
+<meta name="description" content="Der Discord Server von NightWither Unity: Gaming, Streaming und Content Creation">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="NightWither Unity Discord">
+<meta property="og:description" content="Der Discord Server von NightWither Unity: Gaming, Streaming und Content Creation.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://discord.nightwither.de/">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/rajdhani-700.woff" as="font" type="font/woff" crossorigin>
+<style>
+  @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/rajdhani-500.woff') format('woff'); }
+  @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 700; font-display: swap; src: url('fonts/rajdhani-700.woff') format('woff'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/inter-400.woff') format('woff'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/inter-500.woff') format('woff'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('fonts/inter-600.woff') format('woff'); }
 
-    :root {
-      --bg: #0a0a0d;
-      --surface: #111116;
-      --border: rgba(255,255,255,0.07);
-      --gold: #c9a84c;
-      --gold-dim: rgba(201,168,76,0.15);
-      --text: #e8e8e8;
-      --text-secondary: #95A5A6;
-      --muted: #666;
-      --success: #2ECC71;
-    }
+  /* Gleiche Marken-Token wie Shop und Kanaeluebersicht */
+  :root {
+    --black: #000000;
+    --night: #0a0a0d;
+    --panel: #121215;
+    --gold: #c9a84c;
+    --gold-hi: #e8c96d;
+    --blood: #6b0f1a;
+    --bone: #edeae2;
+    --ash: #9a948a;
+    --line: rgba(237, 234, 226, 0.1);
+    --display: 'Rajdhani', 'Arial Narrow', sans-serif;
+    --text: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --pad: clamp(18px, 4vw, 48px);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
 
-    body {
-      background: #000000;
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    background: var(--black);
+    color: var(--bone);
+    font-family: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  [hidden] { display: none !important; }
+  ::selection { background: rgba(201, 168, 76, 0.3); color: var(--bone); }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
-    #particle-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
+  #particle-canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  main, .foot, .bar { position: relative; z-index: 1; }
 
-    /* Header & Navigation */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-    }
+  .skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--gold); color: var(--black); padding: 8px 14px; font-weight: 600; text-decoration: none; }
+  .skip:focus { left: 8px; }
 
-    .logo-header {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: 0.1em;
-      background: linear-gradient(135deg, #d4a94f 0%, #f0d080 50%, #b8872a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+  /* Goldene Eckwinkel, das Markenzeichen aus Shop und Kanaeluebersicht */
+  .stat-card::after, .server-item::after {
+    content: ''; position: absolute; inset: 8px; pointer-events: none;
+    --c: var(--gold); --l: 14px; --w: 2px;
+    background:
+      linear-gradient(var(--c), var(--c)) top left / var(--l) var(--w) no-repeat,
+      linear-gradient(var(--c), var(--c)) top left / var(--w) var(--l) no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / var(--l) var(--w) no-repeat,
+      linear-gradient(var(--c), var(--c)) top right / var(--w) var(--l) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--w) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom left / var(--w) var(--l) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--w) no-repeat,
+      linear-gradient(var(--c), var(--c)) bottom right / var(--w) var(--l) no-repeat;
+    opacity: 0; transform: scale(1.06);
+    transition: opacity 0.25s, transform 0.35s var(--ease);
+  }
 
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 101;
-    }
+  /* ---------- Leiste ---------- */
+  .bar {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; align-items: center; gap: 18px;
+    padding: 12px var(--pad);
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; }
+  .brand img { width: 26px; height: auto; }
+  .brand span { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .bar-nav { display: flex; gap: 28px; }
+  .bar-nav a { text-decoration: none; font-size: 0.92rem; color: var(--ash); transition: color 0.2s; }
+  .bar-nav a:hover { color: var(--bone); }
 
-    /* Side Menu */
-    .side-menu {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 350px;
-      height: 100vh;
-      background: rgba(10, 10, 13, 0.95);
-      backdrop-filter: blur(10px);
-      border-left: 1px solid var(--border);
-      padding: 100px 40px 40px;
-      transition: right 0.3s ease;
-      z-index: 99;
-      overflow-y: auto;
-    }
-
-    .side-menu.active {
-      right: 0;
-    }
-
-    .menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 98;
-    }
-
-    .menu-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .menu-section {
-      margin-bottom: 40px;
-    }
-
-    .menu-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 15px;
-    }
-
-    .menu-item {
-      display: block;
-      padding: 12px 0;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      width: 100%;
-      text-align: left;
-    }
-
-    .menu-item:hover {
-      color: var(--gold);
-    }
-
-    /* Main Content */
-    .content {
-      position: relative;
-      z-index: 2;
-      padding: 120px 40px 60px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      margin-bottom: 80px;
-      animation: fadeIn 0.8s ease;
-    }
-
-    .hero-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: clamp(2rem, 8vw, 4rem);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      line-height: 1.2;
-    }
-
-    .hero-title span {
-      background: linear-gradient(135deg, #d4a94f 0%, #f0d080 50%, #b8872a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-bottom: 40px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .join-button {
-      display: inline-block;
-      padding: 16px 50px;
-      background: linear-gradient(135deg, #d4a94f 0%, #f0d080 50%, #b8872a 100%);
-      color: #0a0a0d;
-      text-decoration: none;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border-radius: 8px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 4px 15px rgba(201,168,76,0.3);
-    }
-
-    .join-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(201,168,76,0.4);
-    }
-
-    /* Stats Section */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 80px;
-    }
-
-    .stat-card {
-      background: rgba(17, 17, 22, 0.6);
-      border: 1px solid var(--border);
-      padding: 30px;
-      border-radius: 12px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      animation: fadeUp 0.8s ease;
-    }
-
-    .stat-number {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .stat-online {
-      color: var(--success);
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    /* Info Section */
-    .info-section {
-      background: rgba(17, 17, 22, 0.6);
-      border: 1px solid var(--border);
-      padding: 40px;
-      border-radius: 12px;
-      margin-bottom: 80px;
-      backdrop-filter: blur(10px);
-      animation: fadeUp 0.8s ease 0.1s both;
-    }
-
-    .info-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      color: var(--gold);
-    }
-
-    .info-text {
-      line-height: 1.8;
-      color: var(--text-secondary);
-      font-size: 1rem;
-    }
-
-    /* Feedback Form */
-    .feedback-section {
-      margin-bottom: 80px;
-      animation: fadeUp 0.8s ease 0.2s both;
-    }
-
-    .form-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      color: var(--gold);
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      color: var(--text-secondary);
-    }
-
-    .form-select, .form-textarea {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(17, 17, 22, 0.8);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-    }
-
-    .form-select:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-    }
-
-    .form-textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .form-button {
-      padding: 12px 30px;
-      background: var(--gold);
-      color: #0a0a0d;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .form-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(201,168,76,0.3);
-    }
-
-    .form-status {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 8px;
-      text-align: center;
-      display: none;
-      font-size: 0.9rem;
-    }
-
-    .form-status.success {
-      background: rgba(46, 204, 113, 0.2);
-      color: var(--success);
-      display: block;
-    }
-
-    .form-status.error {
-      background: rgba(231, 76, 60, 0.2);
-      color: #e74c3c;
-      display: block;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      header {
-        padding: 15px 20px;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .side-menu {
-        width: 100%;
-        right: -100%;
-      }
-
-      .content {
-        padding: 80px 20px 40px;
-      }
-
-      .hero {
-        margin-bottom: 60px;
-      }
-
-      .hero-title {
-        font-size: clamp(1.5rem, 6vw, 2.5rem);
-      }
-
-      .info-section {
-        padding: 25px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-      .stats[hidden] { display: none; }
-    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-    .form-hint { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
-    .form-hint a { color: var(--gold); }
-    .form-button:disabled { opacity: 0.5; cursor: wait; }
-    button:focus-visible, a:focus-visible, .form-select:focus-visible, .form-textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-  /* Zurück zu allen Kanälen */
   .nw-back {
     display: inline-flex; align-items: center; gap: 6px;
-    min-height: 44px; padding: 0 16px 0 12px;
-    border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 999px;
-    background: rgba(0, 0, 0, 0.55);
-    color: #e8e8e8; text-decoration: none; white-space: nowrap;
-    font-family: Rajdhani, 'Arial Narrow', system-ui, sans-serif;
-    font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
-    position: relative; z-index: 5;
+    min-height: 40px; padding: 0 14px 0 10px;
+    border: 1px solid var(--line); border-radius: 2px;
+    color: var(--ash); text-decoration: none; white-space: nowrap;
+    font-family: var(--display); font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
     transition: border-color 0.2s, color 0.2s, background 0.2s;
   }
-  .nw-back:hover, .nw-back:focus-visible { border-color: #c9a84c; color: #c9a84c; background: rgba(201, 168, 76, 0.08); }
-  .nw-back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-  </style>
+  .nw-back:hover, .nw-back:focus-visible { border-color: rgba(201, 168, 76, 0.5); color: var(--gold); background: rgba(201, 168, 76, 0.06); }
+  .nw-back svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .menu-toggle {
+    display: none; width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    color: var(--bone); font-size: 1.4rem; line-height: 1;
+    transition: color 0.2s; z-index: 101;
+  }
+  .menu-toggle:hover { color: var(--gold); }
+
+  /* ---------- Mobiles Menue ---------- */
+  .side-menu {
+    position: fixed; top: 0; right: -100%;
+    width: min(320px, 100%); height: 100vh;
+    background: rgba(10, 10, 13, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-left: 1px solid var(--line);
+    padding: 92px var(--pad) 40px;
+    transition: right 0.35s var(--ease);
+    z-index: 99; overflow-y: auto;
+  }
+  .side-menu.active { right: 0; }
+  .menu-overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 98;
+  }
+  .menu-overlay.active { opacity: 1; pointer-events: auto; }
+  .menu-title {
+    font-family: var(--display); font-weight: 700; font-size: 0.8rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .menu-item {
+    display: block; width: 100%; text-align: left;
+    padding: 15px 0; border-bottom: 1px solid var(--line);
+    color: var(--ash); text-decoration: none; font-size: 0.95rem;
+    transition: color 0.2s;
+  }
+  .menu-item:hover, .menu-item:focus-visible { color: var(--gold); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    padding: clamp(44px, 8vw, 88px) var(--pad) clamp(56px, 9vw, 104px);
+  }
+  /* Der Abstand haelt die Tropfen frei, sie duerfen nicht in die Zeile darunter laufen */
+  .hero-mark { position: relative; width: clamp(104px, 14vw, 168px); margin-bottom: 34px; z-index: 2; }
+  .hero-crown { width: 100%; height: auto; filter: drop-shadow(0 0 18px rgba(201, 168, 76, 0.28)); animation: crownFloat 6s ease-in-out 1.4s infinite; }
+  .drips { position: absolute; left: 0; top: 0; width: 100%; height: auto; overflow: visible; pointer-events: none; }
+  .drip { stroke: var(--gold); stroke-width: 5; stroke-linecap: round; fill: none; stroke-dasharray: 140; stroke-dashoffset: 140; animation: run 1.6s var(--ease) forwards; }
+  .drop { fill: var(--gold-hi); opacity: 0; transform-box: fill-box; transform-origin: center; animation: dropIn 0.5s var(--ease) forwards; }
+  .d1.drip { animation-delay: 0.7s; }
+  .d1.drop { animation-delay: 1.9s; }
+  .d2.drip { stroke-width: 3.5; animation-delay: 1s; }
+  .d2.drop { animation-delay: 2.05s; }
+
+  .hero-eyebrow {
+    font-family: var(--display); font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
+    margin-bottom: 14px;
+    animation: fadeIn 0.8s ease 0.9s both;
+  }
+  .hero-word {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(2.4rem, 8.5vw, 5.2rem);
+    line-height: 0.92; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--bone);
+  }
+  .hero-word i { font-style: normal; display: block; animation: wordUp 1.1s var(--ease) 0.25s both; }
+  .hero-word i:nth-child(2) { animation-delay: 0.35s; }
+  .hero-word i:nth-child(3) { animation-delay: 0.45s; }
+  .hero-word .gold { color: var(--gold); }
+  .hero-line { max-width: 44ch; margin: 24px auto 30px; color: var(--ash); font-size: clamp(1rem, 1.6vw, 1.12rem); text-wrap: balance; animation: fadeIn 0.8s ease 1s both; }
+
+  .btn-gold {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 52px; padding: 0 30px;
+    background: var(--gold); color: var(--black);
+    font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.06em;
+    text-transform: uppercase; text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.2s var(--ease);
+  }
+  .btn-gold:hover { background: var(--gold-hi); }
+  .btn-gold:active { transform: scale(0.98); }
+  .btn-gold[disabled] { background: #3a3629; color: #8a8270; cursor: wait; }
+  .hero .btn-gold { animation: fadeIn 0.8s ease 1.15s both; }
+
+  /* ---------- Abschnitte ---------- */
+  .sec { padding: clamp(40px, 6vw, 84px) var(--pad); max-width: 1120px; margin: 0 auto; }
+  .sec + .sec { padding-top: 0; }
+  .sec h2 {
+    font-family: var(--display); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1.9rem, 4.6vw, 3.2rem); line-height: 1; letter-spacing: 0.01em;
+    margin-bottom: 22px;
+  }
+  .sec-lead { color: var(--ash); max-width: 62ch; line-height: 1.8; }
+  .sec-note { color: var(--ash); max-width: 58ch; margin-bottom: 24px; font-size: 0.95rem; }
+
+  /* ---------- Zahlen ---------- */
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: clamp(12px, 2vw, 20px);
+    padding: 0 var(--pad) clamp(40px, 6vw, 84px);
+    max-width: 1120px; margin: 0 auto;
+  }
+  .stat-card {
+    position: relative;
+    background: rgba(18, 18, 21, 0.6);
+    border: 1px solid var(--line); border-radius: 2px;
+    padding: 30px 24px; text-align: center;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .stat-card::after { --c: rgba(201, 168, 76, 0.55); opacity: 1; transform: none; }
+  .stat-number {
+    font-family: var(--display); font-weight: 700; line-height: 1;
+    font-size: clamp(2.2rem, 5vw, 3rem); color: var(--gold);
+  }
+  .stat-label {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 12px; font-size: 0.76rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ash);
+  }
+  /* Ruhiger Punkt, kein Puls: die Zahl wird einmal beim Laden geholt und
+     aendert sich danach nicht mehr. Ein Pulsieren wuerde mehr Live-Daten
+     vortaeuschen als dahinterstecken. */
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #3fae6a; }
+
+  /* ---------- Serverstruktur ---------- */
+  .server-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(10px, 1.6vw, 16px); }
+  .server-item {
+    position: relative;
+    background: rgba(18, 18, 21, 0.55);
+    border: 1px solid var(--line); border-radius: 2px;
+    padding: 20px;
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .server-item:hover { border-color: rgba(201, 168, 76, 0.4); background: rgba(201, 168, 76, 0.05); transform: translateY(-2px); }
+  .server-item:hover::after { opacity: 1; transform: none; }
+  .server-item h3 {
+    font-family: var(--display); font-weight: 700; font-size: 1rem;
+    letter-spacing: 0.07em; text-transform: uppercase; color: var(--bone);
+  }
+  .server-item p { margin-top: 6px; color: var(--ash); font-size: 0.88rem; line-height: 1.55; }
+
+  /* ---------- Fragen ---------- */
+  /* Fragenliste bleibt schmal, die linke Kante bleibt auf einer Linie mit den anderen Abschnitten */
+  .faq details { max-width: 860px; border-top: 1px solid var(--line); }
+  .faq details:last-of-type { border-bottom: 1px solid var(--line); }
+  .faq summary {
+    list-style: none; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 20px 0; font-weight: 500; font-size: 1.05rem;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: ''; width: 12px; height: 12px; flex: none;
+    border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+    transform: rotate(45deg) translateY(-3px); transition: transform 0.3s var(--ease);
+  }
+  .faq details[open] summary::after { transform: rotate(-135deg) translateY(-3px); }
+  .faq details p { padding: 0 0 22px; color: var(--ash); max-width: 62ch; }
+  .faq a { color: var(--gold); text-underline-offset: 3px; }
+
+  /* ---------- Feedback ---------- */
+  .form { max-width: 620px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block; margin-bottom: 8px;
+    font-size: 0.76rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ash);
+  }
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: ''; position: absolute; right: 18px; top: 50%;
+    width: 9px; height: 9px; pointer-events: none;
+    border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+    transform: translateY(-70%) rotate(45deg);
+  }
+  .form-select, .form-textarea {
+    width: 100%; padding: 13px 16px;
+    background: rgba(18, 18, 21, 0.8);
+    border: 1px solid var(--line); border-radius: 2px;
+    color: var(--bone); font-family: var(--text); font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+  .form-select { appearance: none; -webkit-appearance: none; padding-right: 44px; }
+  .form-select:hover, .form-textarea:hover { border-color: rgba(237, 234, 226, 0.2); }
+  .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--gold); }
+  .form-textarea { min-height: 130px; resize: vertical; line-height: 1.6; }
+  .form-textarea::placeholder { color: #7a746a; }
+  .form-hint { font-size: 0.82rem; color: var(--ash); margin-bottom: 20px; line-height: 1.6; max-width: 58ch; }
+  .form-hint a { color: var(--gold); text-underline-offset: 3px; }
+  .form-status {
+    margin-top: 16px; padding: 12px 16px; border-radius: 2px;
+    font-size: 0.9rem; font-weight: 500; display: none;
+  }
+  .form-status.success { display: block; background: rgba(201, 168, 76, 0.12); border: 1px solid rgba(201, 168, 76, 0.45); color: var(--gold-hi); }
+  .form-status.error { display: block; background: rgba(107, 15, 26, 0.3); border: 1px solid rgba(160, 40, 55, 0.55); color: #e6a6ac; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* ---------- Fuss ---------- */
+  .foot { border-top: 1px solid var(--line); padding: 64px var(--pad) 48px; display: grid; gap: 28px; justify-items: center; text-align: center; }
+  .foot-brand { display: flex; align-items: center; gap: 14px; }
+  .foot-brand img { width: 36px; height: auto; }
+  .foot-brand p { font-family: var(--display); font-weight: 700; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .foot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; }
+  .foot-links a { color: var(--ash); text-decoration: none; font-size: 0.9rem; padding: 11px 4px; transition: color 0.2s; }
+  .foot-links a:hover { color: var(--gold); }
+  .foot-copy { color: #7a746a; font-size: 0.82rem; }
+
+  /* ---------- Bewegung ---------- */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes wordUp { from { clip-path: inset(0 0 100% 0); transform: translateY(0.22em); } to { clip-path: inset(0 0 0 0); transform: none; } }
+  @keyframes run { to { stroke-dashoffset: 0; } }
+  @keyframes dropIn { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: none; } }
+  @keyframes crownFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.88); } }
+
+  .stats, .sec { animation: fadeUp 0.7s ease both; }
+  .stats { animation-delay: 0.05s; }
+
+  /* ---------- Mobil ---------- */
+  @media (max-width: 768px) {
+    .bar-nav { display: none; }
+    .menu-toggle { display: inline-flex; }
+    .hero-mark { width: 34vw; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat-card { padding: 24px 14px; }
+  }
+  @media (max-width: 420px) {
+    .brand span { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+    .hero-crown, .dot { animation: none !important; }
+  }
+</style>
 </head>
 <body>
 
-<!-- Particle Canvas -->
-<canvas id="particle-canvas"></canvas>
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-<!-- Header -->
-<header>
-  <div style="display: flex; align-items: center; gap: 12px;">
-    <img src="logo.png" alt="NWU Logo" style="width: 40px; height: 40px; filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));">
-    <div class="logo-header">NWU</div>
-  </div>
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <a class="nw-back" href="https://nightwither.de" aria-label="Zurück zu allen Kanälen von NightWither"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Alle Kanäle</a>
-    <button class="menu-toggle" type="button" aria-label="Menü öffnen">☰</button>
-  </div>
+<a class="skip" href="#start">Zum Inhalt springen</a>
+
+<header class="bar">
+  <a class="brand" href="#top" aria-label="NightWither Unity Discord, nach oben">
+    <img src="crown.webp" alt="" width="261" height="287">
+    <span>NightWither</span>
+  </a>
+  <nav class="bar-nav" aria-label="Hauptnavigation">
+    <a href="#server">Server</a>
+    <a href="#faq">Fragen</a>
+    <a href="#feedback">Feedback</a>
+  </nav>
+  <a class="nw-back" href="https://nightwither.de" aria-label="Zurück zu allen Kanälen von NightWither"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Alle Kanäle</a>
+  <button class="menu-toggle" type="button" aria-label="Menü öffnen">☰</button>
 </header>
 
-<!-- Side Menu Overlay -->
 <div class="menu-overlay"></div>
 
-<!-- Side Menu -->
-<nav class="side-menu">
-  <div class="menu-section">
-    <div class="menu-title">Navigation</div>
-    <a href="#feedback" class="menu-item">Feedback</a>
-    <a href="#faq" class="menu-item">FAQ</a>
-    <a href="#server" class="menu-item">Server-Erklärung</a>
-  </div>
-
-  <!-- FAQ Section in Menu -->
-  <div class="menu-section" id="faq">
-    <div class="menu-title">FAQ</div>
-    <div style="font-size: 0.9rem; line-height: 1.6; color: var(--text-secondary);">
-      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Was ist NightWither Unity Discord?</strong><br>Community für Streamer, Gaming, Content Creation, Support & Austausch</p>
-      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Wie trete ich bei?</strong><br>Klick den "Join Discord" Button auf dieser Seite</p>
-      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Gibt es Regeln?</strong><br>Ja! Unter "Tor der Dunkelheit" → #Regelwerk</p>
-      <p style="margin-bottom: 15px;"><strong style="color: var(--gold);">Kann ich streamen / Content posten?</strong><br>Ja! Es gibt dedizierte Kanäle dafür</p>
-      <p><strong style="color: var(--gold);">Welche Gaming-Kanäle gibt es?</strong><br>Call of Duty, Warzone, Arc Raiders, Diablo, Minecraft, Fortnite, Mobile Games & mehr!</p>
-    </div>
-  </div>
-
-  <!-- Server-Erklärung in Menu -->
-  <div class="menu-section" id="server">
-    <div class="menu-title">Server-Struktur</div>
-    <div style="font-size: 0.85rem; line-height: 1.8; color: var(--text-secondary);">
-      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">🌑 Tor der Dunkelheit</strong><br>Willkommensbereich, Regeln, Voice</p>
-      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">⭐ Tor des Lichts</strong><br>MrNightwither Streaming Area</p>
-      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">🎮 Spiele</strong><br>COD, Warzone, Arc Raiders, Diablo, Minecraft, Fortnite & mehr</p>
-      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">💫 Schatten Wünsche</strong><br>Community-Vorschläge & Ideen</p>
-      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">📢 Schattenwerbung</strong><br>Social Media & Discord Promotion</p>
-      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">💬 Schatten Gespräche</strong><br>Temporäre Voice Channels & Chat</p>
-      <p style="margin-bottom: 10px;"><strong style="color: var(--gold);">🛟 Schatten Support</strong><br>Support & Ticket-System</p>
-      <p><strong style="color: var(--gold);">😴 Ruhestand</strong><br>AFK & Entspannungs-Bereiche</p>
-    </div>
-  </div>
+<nav class="side-menu" aria-label="Menü">
+  <p class="menu-title">Navigation</p>
+  <a href="#server" class="menu-item">Server-Struktur</a>
+  <a href="#faq" class="menu-item">Fragen</a>
+  <a href="#feedback" class="menu-item">Feedback</a>
+  <a href="https://shop.nightwither.de" class="menu-item">Shop</a>
+  <a href="https://nightwither.de" class="menu-item">Alle Kanäle</a>
 </nav>
 
-<!-- Main Content -->
-<main class="content">
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1 class="hero-title">Tritt der<br><span>Dunkelheit</span><br>bei!<br><span style="font-size: 0.8em; letter-spacing: 0.1em; color: var(--gold);">› NIGHTWITHERUNITY</span></h1>
-    <p class="hero-subtitle">Eine aktive Community für Gaming, Streaming & Content Creation</p>
-    <a href="https://discord.gg/EThzYwM42u" target="_blank" rel="noopener noreferrer" class="join-button">Join Discord</a>
+<main id="top">
+
+  <section class="hero" id="start">
+    <div class="hero-mark">
+      <img class="hero-crown" src="crown.webp" alt="Goldene Krone von NightWither" width="261" height="287" fetchpriority="high">
+      <svg class="drips" viewBox="0 0 261 420" aria-hidden="true">
+        <path class="drip d1" d="M156 278 V306"/><circle class="drop d1" cx="156" cy="314" r="4"/>
+        <path class="drip d2" d="M116 262 V288"/><circle class="drop d2" cx="116" cy="295" r="3.5"/>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">NightWitherUnity</p>
+    <h1 class="hero-word"><i>Tritt der</i><i class="gold">Dunkelheit</i><i>bei</i></h1>
+    <p class="hero-line">Eine aktive Community für Gaming, Streaming und Content Creation.</p>
+    <a class="btn-gold" href="https://discord.gg/EThzYwM42u" target="_blank" rel="noopener noreferrer">Join Discord</a>
   </section>
 
   <!-- Mitgliederzahl, geladen über den eigenen Worker -->
-  <section class="stats" id="discordStats" hidden>
+  <section class="stats" id="discordStats" aria-label="Server in Zahlen" hidden>
     <div class="stat-card">
-      <div class="stat-number" id="statMembers">0</div>
-      <div class="stat-label">Mitglieder</div>
+      <p class="stat-number" id="statMembers">0</p>
+      <p class="stat-label">Mitglieder</p>
     </div>
     <div class="stat-card">
-      <div class="stat-number stat-online" id="statOnline">0</div>
-      <div class="stat-label">Online</div>
+      <p class="stat-number" id="statOnline">0</p>
+      <p class="stat-label"><span class="dot" aria-hidden="true"></span>Online</p>
     </div>
   </section>
 
-  <!-- Info Section -->
-  <section class="info-section">
-    <h2 class="info-title">Was dich erwartet</h2>
-    <p class="info-text">
-      Tauche ein in eine lebendige Community, in der Gaming, Streaming und Content Creation im Zentrum stehen. 
-      Hier kannst du mit gleichgesinnten Menschen über deine Lieblingsspiele sprechen, dich beim Streaming von anderen inspirieren lassen, 
-      oder einfach Teil einer unterstützenden Community sein. Egal ob Warzone, Fortnite, Minecraft oder andere Games – 
-      es gibt für jeden das Richtige. Komm vorbei und lass dich von unserer Energie anstecken! 🚀
+  <section class="sec" aria-labelledby="infoTitle">
+    <h2 id="infoTitle">Was dich erwartet</h2>
+    <p class="sec-lead">
+      Tauche ein in eine lebendige Community, in der Gaming, Streaming und Content Creation im Zentrum stehen.
+      Hier kannst du mit gleichgesinnten Menschen über deine Lieblingsspiele sprechen, dich beim Streaming von
+      anderen inspirieren lassen, oder einfach Teil einer unterstützenden Community sein. Egal ob Warzone,
+      Fortnite, Minecraft oder andere Games – es gibt für jeden das Richtige. Komm vorbei und lass dich von
+      unserer Energie anstecken.
     </p>
   </section>
 
-  <!-- Feedback Section -->
-  <section class="feedback-section" id="feedback">
-    <h2 class="form-title">Dein Feedback</h2>
-    <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">
-      Hast du Verbesserungsvorschläge oder Bugs gefunden? Teile dein Feedback mit uns!
-    </p>
-    <form id="feedback-form" novalidate>
+  <section class="sec" id="server" aria-labelledby="serverTitle">
+    <h2 id="serverTitle">Server-Struktur</h2>
+    <p class="sec-note">So ist der Server aufgebaut. Jeder Bereich hat seine eigenen Kanäle.</p>
+    <div class="server-grid">
+      <div class="server-item"><h3>🌑 Tor der Dunkelheit</h3><p>Willkommensbereich, Regelwerk und Voice.</p></div>
+      <div class="server-item"><h3>⭐ Tor des Lichts</h3><p>Die Streaming Area von MrNightwither.</p></div>
+      <div class="server-item"><h3>🎮 Spiele</h3><p>COD, Warzone, Arc Raiders, Diablo, Minecraft, Fortnite und mehr.</p></div>
+      <div class="server-item"><h3>💫 Schatten Wünsche</h3><p>Vorschläge und Ideen aus der Community.</p></div>
+      <div class="server-item"><h3>📢 Schattenwerbung</h3><p>Social Media und Discord Promotion.</p></div>
+      <div class="server-item"><h3>💬 Schatten Gespräche</h3><p>Temporäre Voice Channels und Chat.</p></div>
+      <div class="server-item"><h3>🛟 Schatten Support</h3><p>Support und Ticket-System.</p></div>
+      <div class="server-item"><h3>😴 Ruhestand</h3><p>AFK und Entspannungsbereiche.</p></div>
+    </div>
+  </section>
+
+  <section class="sec faq" id="faq" aria-labelledby="faqTitle">
+    <h2 id="faqTitle">Fragen</h2>
+    <details>
+      <summary>Was ist der NightWither Unity Discord?</summary>
+      <p>Eine Community für Streamer, Gaming, Content Creation, Support und Austausch.</p>
+    </details>
+    <details>
+      <summary>Wie trete ich bei?</summary>
+      <p>Über den Button „Join Discord“ oben auf dieser Seite.</p>
+    </details>
+    <details>
+      <summary>Gibt es Regeln?</summary>
+      <p>Ja. Du findest sie unter „Tor der Dunkelheit“ im Kanal #Regelwerk.</p>
+    </details>
+    <details>
+      <summary>Kann ich streamen oder Content posten?</summary>
+      <p>Ja, dafür gibt es eigene Kanäle.</p>
+    </details>
+    <details>
+      <summary>Welche Gaming-Kanäle gibt es?</summary>
+      <p>Call of Duty, Warzone, Arc Raiders, Diablo, Minecraft, Fortnite, Mobile Games und mehr.</p>
+    </details>
+    <details>
+      <summary>Wie erreiche ich euch?</summary>
+      <p>Über den Bereich „🛟 Schatten Support“ auf dem Server. Dort kannst du ein Ticket öffnen.</p>
+    </details>
+  </section>
+
+  <section class="sec" id="feedback" aria-labelledby="feedbackTitle">
+    <h2 id="feedbackTitle">Dein Feedback</h2>
+    <p class="sec-note">Hast du Verbesserungsvorschläge oder einen Fehler gefunden? Teile dein Feedback mit uns.</p>
+    <form class="form" id="feedback-form" novalidate>
       <div class="form-group">
         <label class="form-label" for="feedback-category">Kategorie</label>
-        <select class="form-select" id="feedback-category" required>
-          <option value="">Wähle eine Kategorie...</option>
-          <option value="Bug / Fehler">Bug / Fehler</option>
-          <option value="Feature Request">Feature Request</option>
-          <option value="Verbesserung">Verbesserung</option>
-          <option value="Community Feedback">Community Feedback</option>
-          <option value="Sonstiges">Sonstiges</option>
-        </select>
+        <div class="select-wrap">
+          <select class="form-select" id="feedback-category" required>
+            <option value="">Wähle eine Kategorie...</option>
+            <option value="Bug / Fehler">Bug / Fehler</option>
+            <option value="Feature Request">Feature Request</option>
+            <option value="Verbesserung">Verbesserung</option>
+            <option value="Community Feedback">Community Feedback</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label" for="feedback-message">Dein Feedback</label>
@@ -557,16 +494,31 @@
       </div>
       <div class="hp" aria-hidden="true">
         <label for="feedback-website">Webseite</label>
-        <input type="text" id="feedback-website" tabindex="-1" autocomplete="off" />
+        <input type="text" id="feedback-website" tabindex="-1" autocomplete="off">
       </div>
       <p class="form-hint">Dein Feedback wird anonym an unseren Discord Server übermittelt. Bitte schreib keine persönlichen Daten hinein. Mehr dazu in der <a href="https://datenschutz.nightwither.de" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.</p>
-      <button type="submit" class="form-button" id="feedback-submit">Feedback absenden</button>
-      <div class="form-status" id="form-status"></div>
+      <button type="submit" class="btn-gold" id="feedback-submit">Feedback absenden</button>
+      <div class="form-status" id="form-status" role="status"></div>
     </form>
   </section>
+
 </main>
 
-<script src="discord.js?v=20260910c"></script>
+<footer class="foot">
+  <div class="foot-brand">
+    <img src="crown.webp" alt="" width="261" height="287">
+    <p>NightWither Unity</p>
+  </div>
+  <nav class="foot-links" aria-label="Rechtliches und Links">
+    <a href="https://impressum.nightwither.de">Impressum</a>
+    <a href="https://datenschutz.nightwither.de">Datenschutz</a>
+    <a href="https://shop.nightwither.de">Shop</a>
+    <a href="https://nightwither.de">Alle Kanäle</a>
+  </nav>
+  <p class="foot-copy">© 2026 NightWither Unity</p>
+</footer>
+
+<script src="discord.js?v=20260911a"></script>
 
 </body>
 </html>
