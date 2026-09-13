@@ -120,18 +120,21 @@
   .menu-toggle:hover { color: var(--gold); }
 
   /* ---------- Mobiles Menue ---------- */
+  /* Geschoben wird per transform, nicht per right: so steht das Menue nie
+     ausserhalb des Layouts und kann keine Seitenbreite erzeugen. */
   .side-menu {
-    position: fixed; top: 0; right: -100%;
+    position: fixed; top: 0; right: 0;
+    transform: translateX(100%);
     width: min(320px, 100%); height: 100vh;
     background: rgba(10, 10, 13, 0.96);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-left: 1px solid var(--line);
     padding: 92px var(--pad) 40px;
-    transition: right 0.35s var(--ease);
+    transition: transform 0.35s var(--ease);
     z-index: 99; overflow-y: auto;
   }
-  .side-menu.active { right: 0; }
+  .side-menu.active { transform: none; }
   .menu-overlay {
     position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72);
     backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
@@ -354,7 +357,7 @@
       transition-duration: 0.01ms !important;
     }
     html { scroll-behavior: auto; }
-    .hero-crown, .dot { animation: none !important; }
+    .hero-crown { animation: none !important; }
   }
 </style>
 </head>
@@ -467,7 +470,7 @@
     </details>
     <details>
       <summary>Wie erreiche ich euch?</summary>
-      <p>Über den Bereich „🛟 Schatten Support“ auf dem Server. Dort kannst du ein Ticket öffnen.</p>
+      <p>Über den Bereich „🛟 Schatten Support“ auf dem Server. Dort kannst du ein Ticket öffnen. Oder per E Mail an <a href="mailto:nwu.business@nightwither.de">nwu.business@nightwither.de</a>.</p>
     </details>
   </section>
 
