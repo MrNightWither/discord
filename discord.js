@@ -23,7 +23,9 @@ class Particle {
     this.vy = (Math.random() - 0.5) * 0.5;
     this.size = Math.random() * 2 + 0.5;
     this.opacity = Math.random() * 0.5 + 0.2;
-    this.color = Math.random() > 0.5 ? 'rgba(201, 168, 76,' : 'rgba(232, 201, 109,';
+    // Farbe aus saison.js (Halloween orange usw.), sonst das normale NWU-Gold
+    const s = window.NWU_SAISON;
+    this.color = Math.random() > 0.5 ? 'rgba(' + (s ? s.rgb : '201, 168, 76') + ',' : 'rgba(' + (s ? s.rgbHi : '232, 201, 109') + ',';
   }
   update() {
     this.x += this.vx;
