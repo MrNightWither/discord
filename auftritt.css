@@ -114,6 +114,25 @@
 .slider-btn.zurueck:hover:not([disabled]) svg { transform: translateX(-3px); }
 .slider-btn[disabled] { opacity: 0.3; cursor: default; }
 
+/* ---------- Kooperation: Partner-Server (Kacheln baut partner.js) ---------- */
+[data-partner][hidden] { display: none !important; }
+.partner { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: clamp(12px, 1.8vw, 20px); margin-top: 22px; }
+.partner-karte {
+  position: relative; display: flex; flex-direction: column; gap: 8px; height: 100%;
+  padding: 24px 22px; border: 1px solid var(--line); border-radius: 2px;
+  background: rgba(255, 255, 255, 0.02); color: inherit; text-decoration: none;
+  transition: border-color 0.25s, transform 0.35s var(--ease), background 0.25s;
+}
+.partner-karte:hover, .partner-karte:focus-visible { border-color: var(--gold); background: rgba(201, 168, 76, 0.06); transform: translateY(-3px); }
+.partner-name { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 1.3rem; line-height: 1.1; letter-spacing: 0.02em; overflow-wrap: anywhere; }
+.partner-text { color: var(--ash); font-size: 0.95rem; overflow-wrap: anywhere; }
+.partner-los {
+  margin-top: auto; padding-top: 10px; display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.12em; color: var(--gold);
+}
+.partner-los::after { content: '→'; transition: transform 0.3s var(--ease); }
+.partner-karte:hover .partner-los::after, .partner-karte:focus-visible .partner-los::after { transform: translateX(4px); }
+
 /* ---------- Fragen ---------- */
 .faq summary { transition: color 0.2s; }
 .faq summary:hover { color: var(--gold-hi); }

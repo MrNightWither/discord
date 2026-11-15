@@ -360,7 +360,7 @@
     .hero-crown { animation: none !important; }
   }
 </style>
-<link rel="stylesheet" href="auftritt.css?v=20261115a">
+<link rel="stylesheet" href="auftritt.css?v=20261115b">
 </head>
 <body>
 
@@ -375,6 +375,7 @@
   </a>
   <nav class="bar-nav" aria-label="Hauptnavigation">
     <a href="#server">Server</a>
+    <a href="#kooperation" data-partner hidden>Kooperation</a>
     <a href="#faq">Fragen</a>
     <a href="#feedback">Feedback</a>
   </nav>
@@ -387,6 +388,7 @@
 <nav class="side-menu" aria-label="Menü">
   <p class="menu-title">Navigation</p>
   <a href="#server" class="menu-item">Server-Struktur</a>
+  <a href="#kooperation" class="menu-item" data-partner hidden>Kooperation</a>
   <a href="#faq" class="menu-item">Fragen</a>
   <a href="#feedback" class="menu-item">Feedback</a>
   <a href="https://shop.nightwither.de" class="menu-item">Shop</a>
@@ -444,6 +446,7 @@
     <p class="sec-note">So ist der Server aufgebaut. Jeder Bereich hat seine eigenen Kanäle.</p>
     <div class="server-grid">
       <div class="server-item"><h3>🌙 Tor der Dunkelheit</h3><p>Ankommen, Regelwerk, Vorstellung, Ankündigungen, Events und das Lagerfeuer.</p></div>
+      <div class="server-item"><h3>🤝 Kooperationsserver</h3><p>Befreundete Community-Server, mit denen wir eng zusammenarbeiten. Hier lernst du sie kennen.</p></div>
       <div class="server-item"><h3>🌞 Tor des Lichts</h3><p>Die Streaming Area von MrNightwither: Live-Ankündigungen, Clips und Socials.</p></div>
       <div class="server-item"><h3>💬 Schatten-Treff</h3><p>Der Chat der Community, Bilder und Memes, Positives und eure Stream-Wünsche.</p></div>
       <div class="server-item"><h3>📣 Schatten Werbung</h3><p>Hier darfst du deine Socials und deinen Discord zeigen.</p></div>
@@ -455,6 +458,14 @@
       <div class="server-item"><h3>🆘 Schatten Support</h3><p>Probleme oder Fragen? Hier öffnest du ein Ticket.</p></div>
       <div class="server-item"><h3>💤 Ruhestand</h3><p>AFK und Musik zum Entspannen.</p></div>
     </div>
+  </section>
+
+  <!-- Partner-Server: die Liste pflegt Niki im Tab „Partner“ der Tabelle NWU_Community, partner.js baut die Kacheln.
+       Solange die Liste leer ist, bleiben Abschnitt und Reiter unsichtbar. -->
+  <section class="sec" id="kooperation" aria-labelledby="koopTitle" data-partner hidden>
+    <h2 id="koopTitle">Kooperation</h2>
+    <p class="sec-note">Befreundete Community-Server, mit denen wir eng zusammenarbeiten. Schau gern vorbei.</p>
+    <ul class="partner" id="partnerListe"></ul>
   </section>
 
   <section class="sec faq" id="faq" aria-labelledby="faqTitle">
@@ -549,6 +560,7 @@
 <script src="saison.js?v=20261024a" data-nach=".hero-eyebrow" data-ebene="0"></script>
 <script src="discord.js?v=20261115b"></script>
 <script src="auftritt.js?v=20261115b"></script>
+<script src="partner.js?v=20261115a"></script>
 
 </body>
 </html>
