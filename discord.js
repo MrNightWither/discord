@@ -75,8 +75,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(
 // Discord antwortet dem Worker nicht immer beim ersten Mal. Darum: mehrmals versuchen
 // und die zuletzt gesehenen Zahlen im Browser merken, damit der Bereich nie leer bleibt.
 const STATS_MERKER = 'nwu-discord-stats';
-const STATS_VERSUCHE = 4;
-const STATS_PAUSE_MS = 1500;
+const STATS_PAUSEN_MS = [0, 300, 1000, 2500]; // Wartezeit vor jedem Versuch: der zweite kommt fast sofort
 const STATS_ZEITLIMIT_MS = 6000;
 
 function showStats(members, online) {
@@ -111,8 +110,8 @@ async function fetchStats() {
 }
 
 async function loadStats() {
-  for (let versuch = 0; versuch < STATS_VERSUCHE; versuch++) {
-    if (versuch) await new Promise((r) => setTimeout(r, STATS_PAUSE_MS * versuch));
+  for (const pause of STATS_PAUSEN_MS) {
+    if (pause) await new Promise((r) => setTimeout(r, pause));
     const stats = await fetchStats();
     if (!stats) continue;
     showStats(stats.members, stats.online);
