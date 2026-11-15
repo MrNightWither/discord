@@ -11,7 +11,7 @@
   const ZIEH_SCHWELLE_PX = 4; // ab hier gilt eine Mausbewegung als Ziehen
   const ZAEHL_DAUER_MS = 1100;
   const BAND_WIEDERHOLUNGEN = 6;
-  const BAND_TEXT = ['Gaming', 'Streaming', 'Turniere', 'Community', 'Tritt der Dunkelheit bei'];
+  const BAND_TEXT = ['Community', 'Zusammen zocken', 'Labern', 'Eine geile Zeit', 'Tritt der Dunkelheit bei'];
   const NS = 'http://www.w3.org/2000/svg';
 
   function neu(tag, klasse, text) {
