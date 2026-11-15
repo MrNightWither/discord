@@ -72,20 +72,56 @@ document.querySelectorAll('.menu-item').forEach((item) => item.addEventListener(
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
 // ---------- Mitgliederzahl ----------
-async function loadStats() {
+// Discord antwortet dem Worker nicht immer beim ersten Mal. Darum: mehrmals versuchen
+// und die zuletzt gesehenen Zahlen im Browser merken, damit der Bereich nie leer bleibt.
+const STATS_MERKER = 'nwu-discord-stats';
+const STATS_VERSUCHE = 4;
+const STATS_PAUSE_MS = 1500;
+const STATS_ZEITLIMIT_MS = 6000;
+
+function showStats(members, online) {
+  $('statMembers').textContent = members.toLocaleString('de-DE');
+  $('statOnline').textContent = (online || 0).toLocaleString('de-DE');
+  $('discordStats').hidden = false;
+}
+
+function gemerkteStats() {
   try {
-    const res = await fetch(WORKER + '/discord-stats', { credentials: 'omit' });
-    if (!res.ok) return;
+    const d = JSON.parse(localStorage.getItem(STATS_MERKER) || 'null');
+    return d && Number(d.members) > 0 ? { members: Number(d.members), online: Number(d.online) || 0 } : null;
+  } catch (e) {
+    return null; // Speicher gesperrt oder Inhalt kaputt: dann eben ohne Merker
+  }
+}
+
+async function fetchStats() {
+  const abbruch = new AbortController();
+  const uhr = setTimeout(() => abbruch.abort(), STATS_ZEITLIMIT_MS);
+  try {
+    const res = await fetch(WORKER + '/discord-stats', { credentials: 'omit', signal: abbruch.signal });
+    if (!res.ok) return null;
     const data = await res.json();
     const members = Number(data.members);
-    const online = Number(data.online);
-    if (!members) return;
-    $('statMembers').textContent = members.toLocaleString('de-DE');
-    $('statOnline').textContent = (online || 0).toLocaleString('de-DE');
-    $('discordStats').hidden = false;
+    return members > 0 ? { members, online: Number(data.online) || 0 } : null;
   } catch (e) {
-    // Ohne Zahlen bleibt der Bereich einfach ausgeblendet
+    return null; // Netzfehler oder Zeitlimit: der nächste Versuch folgt
+  } finally {
+    clearTimeout(uhr);
   }
+}
+
+async function loadStats() {
+  for (let versuch = 0; versuch < STATS_VERSUCHE; versuch++) {
+    if (versuch) await new Promise((r) => setTimeout(r, STATS_PAUSE_MS * versuch));
+    const stats = await fetchStats();
+    if (!stats) continue;
+    showStats(stats.members, stats.online);
+    try { localStorage.setItem(STATS_MERKER, JSON.stringify(stats)); } catch (e) { /* Speicher gesperrt: nicht schlimm */ }
+    return;
+  }
+  // Alle Versuche gescheitert: lieber die Zahlen vom letzten Besuch als gar keine
+  const alt = gemerkteStats();
+  if (alt) showStats(alt.members, alt.online);
 }
 loadStats();
 

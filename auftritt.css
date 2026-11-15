@@ -1,0 +1,167 @@
+/* NightWither Discord-Seite – Umbau im Shop-Look (15.11.2026)
+   Großer Schriftzug, Laufband, Slider für die Server-Struktur, Einblenden beim Scrollen.
+   Zurücksetzen: in index.html die zwei Zeilen mit „auftritt“ entfernen. */
+
+/* ---------- Leiste: goldene Fortschrittslinie + wachsender Unterstrich ---------- */
+.bar::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-hi));
+  transform: scaleX(var(--prog, 0)); transform-origin: left;
+  pointer-events: none;
+}
+.bar-nav a { position: relative; padding: 6px 0; }
+.bar-nav a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: right; transition: transform 0.35s var(--ease);
+}
+.bar-nav a:hover::after, .bar-nav a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+
+/* ---------- Kopf ---------- */
+.hero { min-height: calc(100svh - 66px - 96px); justify-content: center; padding-top: clamp(28px, 5vw, 64px); padding-bottom: clamp(36px, 6vw, 72px); }
+.hero-mark { margin-bottom: 26px; }
+.hero-mark::before {
+  content: ''; position: absolute; inset: -38% -45%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(201, 168, 76, 0.22), transparent 72%);
+  animation: glimmen 5.5s ease-in-out infinite;
+}
+@keyframes glimmen { 0%, 100% { opacity: 0.45; transform: scale(0.94); } 50% { opacity: 1; transform: scale(1.06); } }
+.hero-word { font-size: clamp(3.1rem, 16.5vw, 9.5rem); line-height: 0.84; letter-spacing: 0.01em; }
+.hero-line { margin-top: 26px; }
+
+/* Goldknopf: Lichtstreifen beim Überfahren */
+.btn-gold { position: relative; overflow: hidden; }
+.btn-gold::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  transition: transform 0.75s var(--ease);
+  pointer-events: none;
+}
+.btn-gold:hover::before, .btn-gold:focus-visible::before { transform: translateX(330%) skewX(-18deg); }
+.btn-gold[disabled]::before { display: none; }
+
+/* ---------- Laufband ---------- */
+.band { position: relative; z-index: 1; height: clamp(84px, 11vw, 120px); overflow: hidden; margin-bottom: clamp(24px, 4vw, 48px); }
+.band-in {
+  position: absolute; left: -10%; top: 28%; width: 120%;
+  padding: 11px 0; overflow: hidden;
+  background: var(--blood);
+  transform: rotate(-2.2deg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+.band-track { display: flex; width: max-content; animation: bandLauf 44s linear infinite; }
+.band-track span {
+  display: inline-flex; align-items: center; gap: 18px; padding-right: 18px;
+  font-family: var(--display); font-weight: 700; text-transform: uppercase; white-space: nowrap;
+  font-size: clamp(1.05rem, 2vw, 1.45rem); letter-spacing: 0.04em; line-height: 1; color: var(--bone);
+}
+.band-track img { width: 20px; height: auto; filter: brightness(0) invert(0.93); }
+@keyframes bandLauf { to { transform: translateX(-50%); } }
+
+/* ---------- Zahlen: groß und ohne Kasten ---------- */
+.stats { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0; margin: 0 auto clamp(40px, 6vw, 84px); width: calc(100% - var(--pad) * 2); }
+.stat-card { background: none; border: 0; backdrop-filter: none; -webkit-backdrop-filter: none; padding: clamp(22px, 4vw, 38px) 12px; }
+.stat-card + .stat-card { border-left: 1px solid var(--line); }
+.stat-card::after { display: none; }
+.stat-number { font-size: clamp(3rem, 9vw, 5.6rem); font-variant-numeric: tabular-nums; }
+
+/* ---------- Was dich erwartet: drei Punkte ---------- */
+.punkte { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 3.4vw, 48px); margin-top: clamp(28px, 4vw, 48px); padding-top: clamp(24px, 3.4vw, 40px); border-top: 1px solid var(--line); }
+.punkt-nr {
+  display: block; font-family: var(--display); font-weight: 700; line-height: 1;
+  font-size: clamp(3.2rem, 6.4vw, 5rem); color: transparent; -webkit-text-stroke: 1.5px var(--gold);
+}
+.punkte h3 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 1.4rem; line-height: 1.1; margin: 10px 0 6px; }
+.punkte p { color: var(--ash); max-width: 32ch; font-size: 0.98rem; }
+
+/* ---------- Server-Struktur als Slider (Klasse setzt auftritt.js) ---------- */
+.server-grid { counter-reset: bereich; }
+.server-item::before {
+  counter-increment: bereich; content: counter(bereich, decimal-leading-zero);
+  display: block; margin-bottom: 14px;
+  font-family: var(--display); font-weight: 700; font-size: 2.4rem; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(201, 168, 76, 0.7);
+}
+.server-item { padding: 24px 22px 26px; }
+.server-item h3 { font-size: 1.15rem; }
+.server-grid.is-slider {
+  display: flex; gap: clamp(12px, 1.8vw, 20px);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  margin-inline: calc(var(--pad) * -1); padding: 6px var(--pad) 10px;
+  scroll-padding-inline: var(--pad);
+  cursor: grab;
+}
+.server-grid.is-slider::-webkit-scrollbar { display: none; }
+.server-grid.is-slider:focus-visible { outline-offset: -2px; }
+.server-grid.is-slider .server-item { flex: 0 0 clamp(240px, 27vw, 320px); scroll-snap-align: start; min-height: 190px; }
+.server-grid.is-slider.zieht { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+
+.slider-nav { display: flex; align-items: center; gap: 18px; margin-top: 20px; }
+.slider-line { position: relative; flex: 1; height: 2px; background: var(--line); overflow: hidden; }
+.slider-line i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--gold); transition: transform 0.15s linear; }
+.slider-count { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.06em; color: var(--ash); font-variant-numeric: tabular-nums; min-width: 4.2em; text-align: right; }
+.slider-count b { color: var(--gold); font-weight: 700; }
+.slider-btn {
+  width: 48px; height: 48px; flex: none; display: grid; place-items: center;
+  border: 1px solid rgba(237, 234, 226, 0.22); border-radius: 2px;
+  transition: border-color 0.2s, background 0.2s, opacity 0.2s;
+}
+.slider-btn svg { width: 20px; height: 20px; fill: none; stroke: var(--bone); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s var(--ease), stroke 0.2s; }
+.slider-btn:hover:not([disabled]) { border-color: var(--gold); background: var(--gold); }
+.slider-btn:hover:not([disabled]) svg { stroke: var(--black); }
+.slider-btn.vor:hover:not([disabled]) svg { transform: translateX(3px); }
+.slider-btn.zurueck:hover:not([disabled]) svg { transform: translateX(-3px); }
+.slider-btn[disabled] { opacity: 0.3; cursor: default; }
+
+/* ---------- Fragen ---------- */
+.faq summary { transition: color 0.2s; }
+.faq summary:hover { color: var(--gold-hi); }
+.faq details[open] p { animation: antwort 0.45s var(--ease); }
+@keyframes antwort { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Abschluss: großer Beitritts-Block ---------- */
+.cta {
+  position: relative; z-index: 1; text-align: center;
+  padding: clamp(64px, 10vw, 130px) var(--pad);
+  margin-bottom: clamp(40px, 6vw, 84px);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: radial-gradient(ellipse at 50% 100%, rgba(201, 168, 76, 0.1), transparent 62%);
+}
+.cta h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: clamp(2.6rem, 9vw, 6.4rem); line-height: 0.9; letter-spacing: 0.01em; }
+.cta h2 .gold { color: var(--gold); }
+.cta p { color: var(--ash); max-width: 40ch; margin: 20px auto 30px; }
+
+/* ---------- Einblenden beim Scrollen (Klassen setzt auftritt.js) ---------- */
+/* Vorher liefen alle Abschnitte schon beim Laden ab, auch die weit unten – jetzt erst, wenn man hinkommt */
+.stats, .sec { animation: none; }
+.rv {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.7s ease var(--rv-d, 0ms), transform 0.8s var(--ease) var(--rv-d, 0ms);
+}
+.rv.rv-in { opacity: 1; transform: none; }
+/* Der Schnitt liegt auf der inneren Hülle: ein ganz weggeschnittenes Element gilt für den Browser als unsichtbar */
+.rv-h .rv-hi {
+  display: block;
+  clip-path: inset(0 0 100% 0); transform: translateY(0.3em);
+  transition: clip-path 0.9s var(--ease) var(--rv-d, 0ms), transform 0.9s var(--ease) var(--rv-d, 0ms);
+}
+.rv-h.rv-in .rv-hi { clip-path: inset(-0.15em 0 -0.15em 0); transform: none; }
+
+.foot-links a { transition: color 0.2s, transform 0.3s var(--ease); }
+.foot-links a:hover { transform: translateY(-2px); }
+
+@media (max-width: 768px) {
+  .punkte { grid-template-columns: 1fr; }
+  .punkte li { display: grid; grid-template-columns: 4.6rem 1fr; column-gap: 14px; align-items: start; }
+  .punkt-nr { grid-row: span 2; font-size: 3.2rem; }
+  .punkte h3 { margin-top: 4px; }
+  .server-grid.is-slider .server-item { flex-basis: 76vw; }
+  .slider-btn { width: 44px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mark::before, .band-track { animation: none !important; }
+  .btn-gold::before { display: none; }
+  .rv, .rv-h .rv-hi { opacity: 1; transform: none; clip-path: none; }
+}

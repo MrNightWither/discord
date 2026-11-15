@@ -360,6 +360,7 @@
     .hero-crown { animation: none !important; }
   }
 </style>
+<link rel="stylesheet" href="auftritt.css?v=20261115a">
 </head>
 <body>
 
@@ -408,6 +409,8 @@
     <a class="btn-gold" href="https://discord.gg/EThzYwM42u" target="_blank" rel="noopener noreferrer">Join Discord</a>
   </section>
 
+  <div class="band" aria-hidden="true"><div class="band-in"><div class="band-track" id="bandTrack"></div></div></div>
+
   <!-- Mitgliederzahl, geladen über den eigenen Worker -->
   <section class="stats" id="discordStats" aria-label="Server in Zahlen" hidden>
     <div class="stat-card">
@@ -429,6 +432,11 @@
       deine Games aus – egal ob Call of Duty, Fortnite, Minecraft, Arc Raiders, Diablo oder Mobile Games – und
       siehst sofort die passenden Kanäle. Komm vorbei und lass dich von unserer Energie anstecken.
     </p>
+    <ul class="punkte">
+      <li><span class="punkt-nr" aria-hidden="true">01</span><h3>Eigene Turniere</h3><p>Warzone-Turniere mit Regelwerk, Anmeldung und Hall of Fame.</p></li>
+      <li><span class="punkt-nr" aria-hidden="true">02</span><h3>Deine Games</h3><p>Beim Beitreten wählst du deine Spiele und siehst sofort die passenden Kanäle.</p></li>
+      <li><span class="punkt-nr" aria-hidden="true">03</span><h3>Eine Community</h3><p>Chat, Voice und Leute, die zusammenhalten.</p></li>
+    </ul>
   </section>
 
   <section class="sec" id="server" aria-labelledby="serverTitle">
@@ -485,6 +493,12 @@
     </details>
   </section>
 
+  <section class="cta" aria-labelledby="ctaTitle">
+    <h2 id="ctaTitle">Die <span class="gold">Schatten</span> warten</h2>
+    <p>Ein Klick, ein paar kurze Fragen von Discord, und du bist drin.</p>
+    <a class="btn-gold" href="https://discord.gg/EThzYwM42u" target="_blank" rel="noopener noreferrer">Join Discord</a>
+  </section>
+
   <section class="sec" id="feedback" aria-labelledby="feedbackTitle">
     <h2 id="feedbackTitle">Dein Feedback</h2>
     <p class="sec-note">Hast du Verbesserungsvorschläge oder einen Fehler gefunden? Teile dein Feedback mit uns.</p>
@@ -533,7 +547,8 @@
 </footer>
 
 <script src="saison.js?v=20261024a" data-nach=".hero-eyebrow" data-ebene="0"></script>
-<script src="discord.js?v=20261024a"></script>
+<script src="discord.js?v=20261115a"></script>
+<script src="auftritt.js?v=20261115a"></script>
 
 </body>
 </html>
